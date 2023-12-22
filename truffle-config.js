@@ -41,10 +41,12 @@
  * https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard/
  */
 
-// require('dotenv').config();
-// const { MNEMONIC, PROJECT_ID } = process.env;
+require('dotenv').config();
+const {INFURA_TOKEN, MNEMONIC, PRIVATE_KEY_FOR_LOOM} = process.env;
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require("truffle-hdwallet-provider");
+
+const LoomTruffleProvider = require('loom-truffle-provider');
 
 module.exports = {
   /**
@@ -58,6 +60,40 @@ module.exports = {
    */
 
   networks: {
+    mainnet: {
+      provider: function () {
+        // Setting the provider with the Infura Mainnet address and Token
+        return new HDWalletProvider(MNEMONIC, `https://mainnet.infura.io/v3/${INFURA_TOKEN}`)
+      },
+      network_id: "1"
+    },
+    // Configuration for rinkeby network
+    etherium_testnet: {
+      // Special function to setup the provider
+      provider: function () {
+        // Setting the provider with the Infura Rinkeby address and Token
+        return new HDWalletProvider(MNEMONIC, `https://goerli.infura.io/v3/${INFURA_TOKEN}`)
+      },
+      network_id: "*",
+      from: "0x0000000000000000000000000000000000000001"
+    },
+    loom_testnet: {
+      provider: function() {
+        // const privateKey = readFileSync(path.join(__dirname, 'private_key');
+        const chainId = 'extdev-plasma-us1';
+        const writeUrl = 'http://extdev-plasma-us1.dappchains.com:80/rpc';
+        const readUrl = 'http://extdev-plasma-us1.dappchains.com:80/query';
+        
+        const loomTruffleProvider = new LoomTruffleProvider(chainId, writeUrl, readUrl, PRIVATE_KEY_FOR_LOOM);
+        return loomTruffleProvider;
+      },
+      network_id: '9545242630824'
+    },
+    development: {
+      host: "127.0.0.1", // Localhost (default: none)
+      port: 8545, // Standard Ethereum port (default: none)
+      network_id: "*", // Any network (default: none)
+    },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache, geth, or parity) in a separate terminal
