@@ -66,14 +66,14 @@ module.exports = {
       network_id: "1"
     },
     // Configuration for rinkeby network
-    etherium_testnet: {
+    ethereum_testnet: {
       // Special function to setup the provider
       provider: function () {
         // Setting the provider with the Infura Rinkeby address and Token
         return new HDWalletProvider(MNEMONIC, `https://goerli.infura.io/v3/${INFURA_TOKEN}`)
       },
       network_id: "*",
-      from: "0x0000000000000000000000000000000000000001"
+      from: "0x6AFF9c3138CE36A21C0e0Ad9914Df2AFB81e861c"
     },
     development: {
       host: "127.0.0.1", // Localhost (default: none)
