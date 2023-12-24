@@ -42,11 +42,9 @@
  */
 
 require('dotenv').config();
-const {INFURA_TOKEN, MNEMONIC, PRIVATE_KEY_FOR_LOOM} = process.env;
+const {INFURA_TOKEN, MNEMONIC} = process.env;
 
 const HDWalletProvider = require("truffle-hdwallet-provider");
-
-const LoomTruffleProvider = require('loom-truffle-provider');
 
 module.exports = {
   /**
@@ -76,18 +74,6 @@ module.exports = {
       },
       network_id: "*",
       from: "0x0000000000000000000000000000000000000001"
-    },
-    loom_testnet: {
-      provider: function() {
-        // const privateKey = readFileSync(path.join(__dirname, 'private_key');
-        const chainId = 'extdev-plasma-us1';
-        const writeUrl = 'http://extdev-plasma-us1.dappchains.com:80/rpc';
-        const readUrl = 'http://extdev-plasma-us1.dappchains.com:80/query';
-        
-        const loomTruffleProvider = new LoomTruffleProvider(chainId, writeUrl, readUrl, PRIVATE_KEY_FOR_LOOM);
-        return loomTruffleProvider;
-      },
-      network_id: '9545242630824'
     },
     development: {
       host: "127.0.0.1", // Localhost (default: none)

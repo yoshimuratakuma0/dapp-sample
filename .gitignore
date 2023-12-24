@@ -1,5 +1,8 @@
 node_modules
-loom
 build/*
+.vscode
 
 .env
+*.db
+receipts_db
+chaindata
